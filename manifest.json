@@ -1,0 +1,17 @@
+{
+    "name": "IncognitoThis",
+    "version": "1.0.0",
+    "description": "Instantly open the current website in an Incognito Window!",
+    "manifest_version": 2,
+    "permissions": ["activeTab", "tabs"],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ],
+    "browser_action": {
+        "default_title": "Instantly open the current website in an Incognito Window!",
+        "default_popup": "popup.html"
+    }
+}
