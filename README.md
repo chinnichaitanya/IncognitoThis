@@ -21,4 +21,5 @@ the users can confidently install this extension.
 
 ## 🙌 Contributing
 Feel free submit PRs! 😀
+
 I'm a novice in developing extensions and I'm very open to learn good practices in building & architecting this project!
