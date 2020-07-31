@@ -13,5 +13,11 @@
     "browser_action": {
         "default_title": "Instantly open the current website in an Incognito Window!",
         "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "images/IncognitoThis-16.png",
+        "32": "images/IncognitoThis-32.png",
+        "48": "images/IncognitoThis-48.png",
+        "128": "images/IncognitoThis-128.png"
     }
 }
