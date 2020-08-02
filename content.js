@@ -28,7 +28,7 @@ function start() {
 function getNormal(allWindows) {
   var normalWindow = null;
   if (allWindows != null) {
-    for (i = 0; i < allWindows.length; i++) {
+    for (i = allWindows.length - 1; i >= 0; i--) {
       var currentWindow = allWindows[i];
       if (!currentWindow.incognito) {
         normalWindow = currentWindow;
@@ -43,7 +43,7 @@ function getNormal(allWindows) {
 function getIncognito(allWindows) {
   var incognitoWindow = null;
   if (allWindows != null) {
-    for (i = 0; i < allWindows.length; i++) {
+    for (i = allWindows.length - 1; i >= 0; i--) {
       var currentWindow = allWindows[i];
       if (currentWindow.incognito) {
         incognitoWindow = currentWindow;
