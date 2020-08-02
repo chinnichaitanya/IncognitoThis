@@ -10,18 +10,42 @@ function start() {
     currentTab = tabs[0];
 
     chrome.windows.getAll({ populate: true }, (allWindows) => {
-      incognitoWindow = getIncognito(allWindows);
-      moveTab(currentTab, incognitoWindow);
+      if (currentTab.incognito) {
+        // Current tab is in incognito
+        // Open in normal window
+        targetWindow = getNormal(allWindows);
+      } else {
+        // Current tab is not in incognito
+        // Open in incognito window
+        targetWindow = getIncognito(allWindows);
+      }
+
+      moveTab(currentTab, targetWindow);
     });
   });
 }
 
-function getIncognito(allWindows) {
-  incognitoWindow = null;
+function getNormal(allWindows) {
+  var normalWindow = null;
   if (allWindows != null) {
     for (i = 0; i < allWindows.length; i++) {
-      currentWindow = allWindows[i];
-      if (currentWindow.incognito == true) {
+      var currentWindow = allWindows[i];
+      if (!currentWindow.incognito) {
+        normalWindow = currentWindow;
+        break;
+      }
+    }
+  }
+
+  return normalWindow;
+}
+
+function getIncognito(allWindows) {
+  var incognitoWindow = null;
+  if (allWindows != null) {
+    for (i = 0; i < allWindows.length; i++) {
+      var currentWindow = allWindows[i];
+      if (currentWindow.incognito) {
         incognitoWindow = currentWindow;
         break;
       }
@@ -52,8 +76,10 @@ function moveTab(currentTab, targetWindow) {
         focused: true,
       });
     } else {
-      // If there is no existing incognito window, open the URL in a new incognito window
-      chrome.windows.create({ url: currentTab.url, incognito: true });
+      // If there is no existing target window, open the URL in a new window
+      // If current tab is in incognito, open in a new normal window
+      // If current tab is not in incognito, open in a new incognito window
+      chrome.windows.create({ url: currentTab.url, incognito: !currentTab.incognito });
     }
   }
 }
