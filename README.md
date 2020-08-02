@@ -9,10 +9,11 @@ With just a click, open any existing tab in a new incognito window.
 
 ### 🏃Roadmap
 
-- This currently opens a new window everytime though there is an existing incognito window. Need to check the feasibility of opening it in a tab
-- As of now, it works one way, i.e, privatizes an existing tab. Would be interesting to open incognito tabs in a normal window
+- [x] This currently opens a new window everytime though there is an existing incognito window. Need to check the feasibility of opening it in a tab if there is already an incognito window
+- [x] As of now, it works one way, i.e, privatizes an existing tab. Would be interesting to open incognito tabs in a normal window
 - Option to incognito these tabs in bulk, currently works for a single tab
 - Add an option to incognito, in the drop-down upon right-clicking on the browser window
+- Choose a tab without any URL loaded instead of creating a new tab again
 
 ## 😇 Why did I build this?
 
