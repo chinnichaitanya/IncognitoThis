@@ -4,14 +4,13 @@
     "description": "Instantly open the current website in an Incognito Window or vice-versa!",
     "manifest_version": 2,
     "permissions": ["tabs"],
-    "content_scripts": [{
-        "matches": ["<all_urls>"],
-        "js": ["content.js"]
-    }],
     "browser_action": {
         "default_icon": "images/IncognitoThis.png",
-        "default_title": "Instantly open the current website in an Incognito Window or vice-versa!",
-        "default_popup": "popup.html"
+        "default_title": "Instantly open the current website in an Incognito Window or vice-versa!"
+    },
+    "background": {
+        "persistent": false,
+        "scripts": ["background.js"]
     },
     "icons": {
         "16": "images/IncognitoThis-16.png",
