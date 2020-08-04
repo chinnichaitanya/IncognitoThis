@@ -13,7 +13,7 @@ With just a click, open any existing tab in a new incognito window. If enabled i
 - [x] As of now, it works one way, i.e, privatizes an existing tab. Would be interesting to open incognito tabs in a normal window
 - [ ] Option to incognito these tabs in bulk, currently works for a single tab
 - [ ] Add an option to incognito, in the drop-down upon right-clicking on the browser window
-- [ ] Choose a tab without any URL loaded instead of creating a new tab again
+- [x] Choose a tab without any URL loaded instead of creating a new tab again
 
 ## 😇 Why did I build this?
 
