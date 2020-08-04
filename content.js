@@ -28,7 +28,7 @@ function start() {
 function getNormal(allWindows) {
   var normalWindow = null;
   if (allWindows != null) {
-    for (i = allWindows.length - 1; i >= 0; i--) {
+    for (var i = allWindows.length - 1; i >= 0; i--) {
       var currentWindow = allWindows[i];
       if (!currentWindow.incognito) {
         normalWindow = currentWindow;
@@ -43,7 +43,7 @@ function getNormal(allWindows) {
 function getIncognito(allWindows) {
   var incognitoWindow = null;
   if (allWindows != null) {
-    for (i = allWindows.length - 1; i >= 0; i--) {
+    for (var i = allWindows.length - 1; i >= 0; i--) {
       var currentWindow = allWindows[i];
       if (currentWindow.incognito) {
         incognitoWindow = currentWindow;
@@ -55,21 +55,46 @@ function getIncognito(allWindows) {
   return incognitoWindow;
 }
 
+function getNewTabInWindow(window) {
+  var newTab = null;
+  if (window != null) {
+    for (var i = window.tabs.length - 1; i >= 0; i--) {
+      var currentTab = window.tabs[i];
+      if (currentTab.url == "chrome://newtab/") {
+        newTab = currentTab;
+        break;
+      }
+    }
+  }
+
+  return newTab;
+}
+
 function moveTab(currentTab, targetWindow) {
   if (currentTab != null) {
     if (targetWindow != null) {
-      // Calculate the number of tabs in the target window
-      var numTabsInTargetWindow = targetWindow.tabs.length;
-
-      // Cannot move a tab from normal window to incognito window, since they are not of the same profile
+      // Cannot move a tab from normal window to incognito window or vice-versa, since they are not of the same profile
       // chrome.tabs.move(currentTab.id, {"windowId": targetWindow.id, "index": numTabsInTargetWindow + 1} );
 
-      // Create a new tab in the incognito window
-      chrome.tabs.create({
-        windowId: targetWindow.id,
-        index: numTabsInTargetWindow + 1,
-        url: currentTab.url,
-      });
+      var newTab = getNewTabInWindow(targetWindow);
+      if (newTab != null) {
+        // There is a new tab without a loaded URL in target window
+        chrome.tabs.update(newTab.id, {
+          url: currentTab.url,
+          active: true,
+        });
+      } else {
+        // Calculate the number of tabs in the target window
+        var numTabsInTargetWindow = targetWindow.tabs.length;
+
+        // Create a new tab in the target window
+        chrome.tabs.create({
+          windowId: targetWindow.id,
+          index: numTabsInTargetWindow + 1,
+          url: currentTab.url,
+        });
+      }
+
       // Creating a new tab doesn't make the window focussed
       // Focus the targetWindow
       chrome.windows.update(targetWindow.id, {
@@ -79,7 +104,10 @@ function moveTab(currentTab, targetWindow) {
       // If there is no existing target window, open the URL in a new window
       // If current tab is in incognito, open in a new normal window
       // If current tab is not in incognito, open in a new incognito window
-      chrome.windows.create({ url: currentTab.url, incognito: !currentTab.incognito });
+      chrome.windows.create({
+        url: currentTab.url,
+        incognito: !currentTab.incognito,
+      });
     }
   }
 }
