@@ -1,10 +1,38 @@
 // References:
 // - https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/windows/merge_windows
 
+TOGGLE_CONTEXT_MENU_ID = "toggle-incognito";
 currentTab = null;
 targetWindow = null;
 
-function start() {
+function createContextMenu() {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    currentTab = tabs[0];
+
+    var title = "Move to incognito";
+    if (currentTab.incognito) title = "Move to normal tab";
+
+    chrome.contextMenus.create({
+      id: TOGGLE_CONTEXT_MENU_ID,
+      title: title,
+      visible: true,
+      contexts: ["all"],
+    });
+  });
+}
+
+function updateContextMenu() {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    currentTab = tabs[0];
+
+    var title = "Move to incognito";
+    if (currentTab.incognito) title = "Move to normal tab";
+
+    chrome.contextMenus.update(TOGGLE_CONTEXT_MENU_ID, { title: title });
+  });
+}
+
+function toggle() {
   // Fetch the current active tab from the current window
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     currentTab = tabs[0];
@@ -20,7 +48,10 @@ function start() {
         targetWindow = getIncognito(allWindows);
       }
 
+      // Move the current tab to target window
       moveTab(currentTab, targetWindow);
+      // // Update the text in context menu
+      // updateContextMenu();
     });
   });
 }
@@ -112,9 +143,14 @@ function moveTab(currentTab, targetWindow) {
   }
 }
 
-// // Ensure everything is loaded
-// document.addEventListener("DOMContentLoaded", () => {
-// });
+// Create the context menu
+createContextMenu();
+chrome.contextMenus.onClicked.addListener(toggle);
 
 // Trigger the toggle upon clicked
-chrome.browserAction.onClicked.addListener(start);
+chrome.browserAction.onClicked.addListener(toggle);
+
+chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.message == "updateContextMenu") updateContextMenu();
+  else sendResponse({});
+});
