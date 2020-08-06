@@ -3,6 +3,8 @@
 Instantly open any existing tab in a private window, and vice-versa!
 Currently available as an extension for Google Chrome and Chromium browsers.
 
+⚡️ [Click here to install!](https://chrome.google.com/webstore/detail/incognitothis/iimlkjcbebhfifhihbpddacmcpbjoejp)
+
 ## 🚀 Features
 
 With just a click, open any existing tab in a new incognito window. If enabled in incognito, can open tabs in the normal window, exactly like a toggle!
