@@ -5,6 +5,9 @@ TOGGLE_CONTEXT_MENU_ID = "toggle-incognito";
 currentTab = null;
 targetWindow = null;
 
+// Create the context menu item
+// Adds different text depending on whether the current tab is in
+//  incognito or normal window
 function createContextMenu() {
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
     currentTab = tabs[0];
@@ -21,6 +24,9 @@ function createContextMenu() {
   });
 }
 
+// Update the context menu item
+// Changes the text depending on whether the current tab is in
+//  incognito or normal window
 function updateContextMenu() {
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
     currentTab = tabs[0];
