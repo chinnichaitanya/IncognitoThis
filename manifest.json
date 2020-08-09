@@ -1,6 +1,6 @@
 {
     "name": "IncognitoThis",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "description": "Instantly open the current website in an Incognito Window or vice-versa!",
     "manifest_version": 2,
     "permissions": ["contextMenus", "tabs"],
