@@ -1,31 +1,12 @@
 // References:
 // - https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/windows/merge_windows
 
-TOGGLE_CONTEXT_MENU_ID = "toggle-incognito";
+CONTEXT_MENU_ID = null;
 currentTab = null;
 targetWindow = null;
 
-// Create the context menu item
+// Creates/updates the context menu item
 // Adds different text depending on whether the current tab is in
-//  incognito or normal window
-function createContextMenu() {
-  chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-    currentTab = tabs[0];
-
-    var title = "Move to incognito";
-    if (currentTab.incognito) title = "Move to normal tab";
-
-    chrome.contextMenus.create({
-      id: TOGGLE_CONTEXT_MENU_ID,
-      title: title,
-      visible: true,
-      contexts: ["all"],
-    });
-  });
-}
-
-// Update the context menu item
-// Changes the text depending on whether the current tab is in
 //  incognito or normal window
 function updateContextMenu() {
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
@@ -34,7 +15,16 @@ function updateContextMenu() {
     var title = "Move to incognito";
     if (currentTab.incognito) title = "Move to normal tab";
 
-    chrome.contextMenus.update(TOGGLE_CONTEXT_MENU_ID, { title: title });
+    if (CONTEXT_MENU_ID == null) {
+      CONTEXT_MENU_ID = chrome.contextMenus.create({
+        id: "toggle-incognito",
+        title: title,
+        visible: true,
+        contexts: ["all"],
+      });
+    } else {
+      chrome.contextMenus.update(CONTEXT_MENU_ID, { title: title });
+    }
   });
 }
 
@@ -167,7 +157,7 @@ function moveTab(currentTab, targetWindow) {
 }
 
 // Create the context menu
-createContextMenu();
+updateContextMenu();
 chrome.contextMenus.onClicked.addListener(toggle);
 
 // Trigger the toggle upon clicked
