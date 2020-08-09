@@ -1,3 +1,5 @@
+![IncognitoThis Logo](/images/icon-128x128.png)
+
 # IncognitoThis
 
 Instantly open any existing tab in a private window, and vice-versa!
