@@ -5,7 +5,7 @@
     "manifest_version": 2,
     "permissions": ["contextMenus", "tabs"],
     "browser_action": {
-        "default_icon": "images/IncognitoThis.png",
+        "default_icon": "images/icon-512x512.png",
         "default_title": "Instantly open the current website in an Incognito Window or vice-versa!"
     },
     "background": {
@@ -17,9 +17,9 @@
         "js": ["content.js"]
     }],
     "icons": {
-        "16": "images/IncognitoThis-16.png",
-        "32": "images/IncognitoThis-32.png",
-        "48": "images/IncognitoThis-48.png",
-        "128": "images/IncognitoThis-128.png"
+        "16": "images/icon-16x16.png",
+        "32": "images/icon-32x32.png",
+        "48": "images/icon-48x48.png",
+        "128": "images/icon-128x128.png"
     }
 }
