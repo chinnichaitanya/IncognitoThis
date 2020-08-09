@@ -1,4 +1,4 @@
-<img align="left" width="50" height="50" src="images/icon-128x128.png">
+<img align="left" width="144" height="144" src="images/icon-128x128.png">
 
 # IncognitoThis
 
