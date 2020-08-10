@@ -12,8 +12,8 @@ function updateContextMenu() {
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
     currentTab = tabs[0];
 
-    var title = "Move to incognito";
-    if (currentTab.incognito) title = "Move to normal tab";
+    var title = "Open in incognito";
+    if (currentTab.incognito) title = "Open in normal tab";
 
     if (CONTEXT_MENU_ID == null) {
       CONTEXT_MENU_ID = chrome.contextMenus.create({
